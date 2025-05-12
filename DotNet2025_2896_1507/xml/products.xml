@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfProduct xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Product>
+    <IdProduct>102</IdProduct>
+    <ProductName>כובע פונפון</ProductName>
+    <Category>שמיכות_וכובעים</Category>
+    <Price>39.9</Price>
+    <AmountInStock>35</AmountInStock>
+  </Product>
+  <Product>
+    <IdProduct>103</IdProduct>
+    <ProductName>Mam בקבוק</ProductName>
+    <Category>בקבוקים_ומוצצים</Category>
+    <Price>40</Price>
+    <AmountInStock>100</AmountInStock>
+  </Product>
+  <Product>
+    <IdProduct>104</IdProduct>
+    <ProductName>עגלת בוגבו</ProductName>
+    <Category>עגלות</Category>
+    <Price>5000</Price>
+    <AmountInStock>30</AmountInStock>
+  </Product>
+  <Product>
+    <IdProduct>105</IdProduct>
+    <ProductName>צמיד כסף</ProductName>
+    <Category>צמידים_ועגילים</Category>
+    <Price>75</Price>
+    <AmountInStock>25</AmountInStock>
+  </Product>
+  <Product>
+    <IdProduct>107</IdProduct>
+    <ProductName>bgbg</ProductName>
+    <Category>שמיכות_וכובעים</Category>
+    <Price>117</Price>
+    <AmountInStock>4</AmountInStock>
+  </Product>
+</ArrayOfProduct>

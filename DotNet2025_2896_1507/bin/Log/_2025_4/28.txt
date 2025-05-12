@@ -1,0 +1,1 @@
+28/04/2025 23:24:28	DalTest.Program.Main:	The method or operation is not implemented.

@@ -1,0 +1,1 @@
+25/03/2025 10:50:15	DalTest.Program.Main:	The type initializer for 'DalTest.Program' threw an exception.

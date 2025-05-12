@@ -1,0 +1,4 @@
+27/04/2025 18:02:50	DalTest.Program.Main:	The method or operation is not implemented.
+27/04/2025 18:03:12	DalTest.Program.Main:	The method or operation is not implemented.
+27/04/2025 18:06:38	DalTest.Program.Main:	The method or operation is not implemented.
+27/04/2025 18:13:52	DalTest.Program.Main:	The method or operation is not implemented.
