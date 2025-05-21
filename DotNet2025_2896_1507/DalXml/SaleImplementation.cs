@@ -110,7 +110,23 @@ internal class SaleImplementation : ISale
 
     public void Update(Sale item)
     {
-        Delete(item.IdSale);
-        Create(item);
+        try
+        {
+            List<Sale> sales = new List<Sale>();
+            using (FileStream fileStream = new FileStream(FILE_PATH_s, FileMode.Open))
+            {
+                sales = serializer_s.Deserialize(fileStream) as List<Sale?>;
+            }
+            int index = sales.FindIndex(s => s.IdSale == item.IdSale);
+            sales[index] = item;
+            using (FileStream fileStream = new FileStream(FILE_PATH_s, FileMode.Create, FileAccess.Write))
+            {
+                serializer_s.Serialize(fileStream, sales);
+            }
+        }
+        catch
+        {
+            throw new DalIdNotExist("sale id not found");
+        }
     }
 }

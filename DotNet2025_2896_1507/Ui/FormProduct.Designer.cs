@@ -104,7 +104,7 @@
             tabPage1.Location = new Point(4, 29);
             tabPage1.Name = "tabPage1";
             tabPage1.Padding = new Padding(3);
-            tabPage1.Size = new Size(714, 456);
+            tabPage1.Size = new Size(716, 451);
             tabPage1.TabIndex = 0;
             tabPage1.Text = "הוספה";
             tabPage1.UseVisualStyleBackColor = true;
@@ -280,7 +280,7 @@
             tabPage4.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point);
             tabPage4.Location = new Point(4, 29);
             tabPage4.Name = "tabPage4";
-            tabPage4.Size = new Size(714, 456);
+            tabPage4.Size = new Size(716, 451);
             tabPage4.TabIndex = 3;
             tabPage4.Text = "עריכה";
             tabPage4.UseVisualStyleBackColor = true;
@@ -293,6 +293,7 @@
             selectNameProduct.Name = "selectNameProduct";
             selectNameProduct.Size = new Size(203, 29);
             selectNameProduct.TabIndex = 14;
+            selectNameProduct.SelectedIndexChanged += selectNameProduct_SelectedIndexChanged;
             // 
             // quentityToUpdate
             // 
@@ -390,7 +391,7 @@
             tabPage5.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point);
             tabPage5.Location = new Point(4, 29);
             tabPage5.Name = "tabPage5";
-            tabPage5.Size = new Size(714, 456);
+            tabPage5.Size = new Size(716, 451);
             tabPage5.TabIndex = 4;
             tabPage5.Text = "מחיקה";
             tabPage5.UseVisualStyleBackColor = true;

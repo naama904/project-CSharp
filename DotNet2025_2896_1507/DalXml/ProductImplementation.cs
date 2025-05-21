@@ -1,4 +1,5 @@
 ﻿
+using System.Reflection;
 using System.Xml.Serialization;
 using DalApi;
 using DO;
@@ -85,7 +86,26 @@ internal class ProductImplementation : IProduct
 
     public void Update(Product item)
     {
-        Delete(item.IdProduct);
-        Create(item);
+        //Delete(item.IdProduct);
+        //Create(item);
+
+        try
+        {
+            List<Product> products = new List<Product>();
+            using (FileStream fileStream = new FileStream(FILE_PATH, FileMode.Open))
+            {
+                products = serializer.Deserialize(fileStream) as List<Product?>;
+            }
+            int index = products.FindIndex(p => p.IdProduct == item.IdProduct);
+            products[index] = item;
+            using (FileStream fileStream = new FileStream(FILE_PATH, FileMode.Create, FileAccess.Write))
+            {
+                serializer.Serialize(fileStream, products);
+            }
+        }
+        catch
+        {
+            throw new DalIdNotExist("product id not found");
+        }
     }
 }

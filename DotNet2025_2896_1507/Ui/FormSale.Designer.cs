@@ -69,7 +69,7 @@
             label8 = new Label();
             label11 = new Label();
             tabPage5 = new TabPage();
-            selectProductToDeleteSale = new ComboBox();
+            selectSaleToDeleteSale = new ComboBox();
             buttonDeleteD = new Button();
             label3 = new Label();
             label4 = new Label();
@@ -355,6 +355,7 @@
             // 
             sumPriceSale.ForeColor = SystemColors.WindowFrame;
             sumPriceSale.Location = new Point(16, 182);
+            sumPriceSale.Maximum = new decimal(new int[] { 10000, 0, 0, 0 });
             sumPriceSale.Name = "sumPriceSale";
             sumPriceSale.Size = new Size(208, 38);
             sumPriceSale.TabIndex = 24;
@@ -506,7 +507,7 @@
             // 
             // tabPage5
             // 
-            tabPage5.Controls.Add(selectProductToDeleteSale);
+            tabPage5.Controls.Add(selectSaleToDeleteSale);
             tabPage5.Controls.Add(buttonDeleteD);
             tabPage5.Controls.Add(label3);
             tabPage5.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point);
@@ -517,15 +518,15 @@
             tabPage5.Text = "מחיקה";
             tabPage5.UseVisualStyleBackColor = true;
             // 
-            // selectProductToDeleteSale
+            // selectSaleToDeleteSale
             // 
-            selectProductToDeleteSale.Font = new Font("Arial", 10.8F, FontStyle.Regular, GraphicsUnit.Point);
-            selectProductToDeleteSale.ForeColor = SystemColors.WindowFrame;
-            selectProductToDeleteSale.FormattingEnabled = true;
-            selectProductToDeleteSale.Location = new Point(35, 53);
-            selectProductToDeleteSale.Name = "selectProductToDeleteSale";
-            selectProductToDeleteSale.Size = new Size(201, 29);
-            selectProductToDeleteSale.TabIndex = 4;
+            selectSaleToDeleteSale.Font = new Font("Arial", 10.8F, FontStyle.Regular, GraphicsUnit.Point);
+            selectSaleToDeleteSale.ForeColor = SystemColors.WindowFrame;
+            selectSaleToDeleteSale.FormattingEnabled = true;
+            selectSaleToDeleteSale.Location = new Point(35, 53);
+            selectSaleToDeleteSale.Name = "selectSaleToDeleteSale";
+            selectSaleToDeleteSale.Size = new Size(201, 29);
+            selectSaleToDeleteSale.TabIndex = 4;
             // 
             // buttonDeleteD
             // 
@@ -627,7 +628,7 @@
         private Label label1;
         private Label label10;
         private Label label14;
-        private ComboBox selectProductToDeleteSale;
+        private ComboBox selectSaleToDeleteSale;
         private ComboBox selectProductToSale;
         private ComboBox selectProductReadSale;
         private ComboBox selectSaleToUpdate;

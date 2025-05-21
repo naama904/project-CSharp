@@ -159,15 +159,7 @@ namespace Ui
             {
 
                 int id = int.Parse(selectCustomerUpdate.SelectedValue.ToString());
-                //List<Customer> customers = new List<Customer>();
-                //customers = s_bl.Customer.ReadAll();
-                //Customer customer = customers.FirstOrDefault(c => c.Identity == id);
-                //Customer customer=new Customer(
-                //    id,
-                //    nameCustomer.Text,
-                //    addressToUpdate.Text,
-                //    phoneToUpdate.Text
-                //    );
+
 
                 Customer customer = s_bl.Customer.Read(id);
 

@@ -20,4 +20,5 @@ C:\Users\user1\Documents\תכנות יד\c#\פרויקט קופה רושמת\Dot
 C:\Users\user1\Documents\תכנות יד\c#\פרויקט קופה רושמת\DotNet2025_2896_1507\Ui\obj\Debug\Ui.FormCustomer.resources
 C:\Users\user1\Documents\תכנות יד\c#\פרויקט קופה רושמת\DotNet2025_2896_1507\Ui\obj\Debug\Ui.FormManagerMenu.resources
 C:\Users\user1\Documents\תכנות יד\c#\פרויקט קופה רושמת\DotNet2025_2896_1507\Ui\obj\Debug\Ui.FormSale.resources
-C:\Users\user1\Documents\תכנות יד\c#\פרויקט קופה רושמת\DotNet2025_2896_1507\Ui\obj\Debug\Ui.finiishOrder.resources
+C:\Users\user1\Documents\תכנות יד\c#\פרויקט קופה רושמת\DotNet2025_2896_1507\Ui\obj\Debug\Ui.FormLogin.resources
+C:\Users\user1\Documents\תכנות יד\c#\פרויקט קופה רושמת\DotNet2025_2896_1507\Ui\obj\Debug\Ui.FormOrder.resources

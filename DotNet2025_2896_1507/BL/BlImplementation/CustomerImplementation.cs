@@ -35,11 +35,16 @@ internal class CustomerImplementation : ICustomer
         return BO.Tools.convertCustomerToBo(_dal.Customer.Read(id));
     }
 
+    public bool Read(string text)
+    {
+        throw new NotImplementedException();
+    }
+
     //public List<BO.Customer?> ReadAll(Func<BO.Customer, bool>? filter = null)
     //{
     //    return _dal.Customer.ReadAll(cust=> filter(BO.Tools.convertCustomerToBo(cust)))
     //        .Select(p=>BO.Tools.convertCustomerToBo(p)).ToList();
-   //}
+    //}
 
     public List<BO.Customer?> ReadAll(Func<BO.Customer, bool>? filter = null)
     {

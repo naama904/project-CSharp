@@ -9,10 +9,10 @@ internal class OrderImplementation : IOrder
 {
     private DalApi.IDal _dal = DalApi.Factory.Get;
 
-    public BO.Order createOrder()
-    {
-        return new BO.Order();
-    }
+    //public BO.Order createOrder()
+    //{
+    //    return new BO.Order();
+    //}
     public List<BO.SaleInProduct> AddProductToOrder(BO.Order order, int idProduct, int amountToOrder)
     {
         try
@@ -50,7 +50,7 @@ internal class OrderImplementation : IOrder
                     isProductInOrder = new BO.ProductInOrder() {IdProduct = idProduct };
                     isProductInOrder.ProductName = p.ProductName;
                     isProductInOrder.BasicPriceForProduct = p.Price ?? 0;
-                    //amounttoorder
+                    p.AmountInStock-= amountToOrder;
                     isProductInOrder.AmountInOrder = amountToOrder;
                     isProductInOrder.SalesListForThisProduct = new List<BO.SaleInProduct>();
                     order.ProductsListInOrder.Add(isProductInOrder);
@@ -114,26 +114,29 @@ internal class OrderImplementation : IOrder
     }
     public void doOrder(BO.Order order)
     {
-        foreach(BO.ProductInOrder product in order.ProductsListInOrder)
-        {
-            DO.Product p = _dal.Product.Read(product.IdProduct);
-            if (p == null)
+
+            foreach (BO.ProductInOrder product in order.ProductsListInOrder)
             {
-                throw new BlIdNotExist();
+                DO.Product p = _dal.Product.Read(product.IdProduct);
+                if (p == null)
+                {
+                    throw new BlIdNotExist();
+                }
+                //if (product.AmountInOrder > p.AmountInStock)
+                //{
+                //    throw new Exception("dont have enugh");
+                //}
+                //int count = (int)p.AmountInStock - product.AmountInOrder;
+                _dal.Product.Update(p with { AmountInStock = p.AmountInStock - product.AmountInOrder });
             }
-            if(product.AmountInOrder>p.AmountInStock)
-            {
-                throw new Exception("dont have enugh");
-            }
-            //int count = (int)p.AmountInStock - product.AmountInOrder;
-        }
+        
     }
     public void searchSaleForProduct(BO.ProductInOrder product, bool isPriorityCustomer)
     {
         try
         {
             product.SalesListForThisProduct = _dal.Sale.ReadAll(sale => product.IdProduct == sale.IdProductOfSale && (isPriorityCustomer == true || (isPriorityCustomer == false && sale.IsForAllCustomers == true)) && DateTime.Now >= sale.StartSale && DateTime.Now <= sale.EndSale)
-.Select(s => new BO.SaleInProduct()
+            .Select(s => new BO.SaleInProduct()
 {
    IdSale = s.IdSale,
    AmountToSale = s.AmountToGetSale ?? 0,
@@ -146,5 +149,10 @@ internal class OrderImplementation : IOrder
             throw new BlIdNotExist(ex.Message);
         }
 
+    }
+
+    public List<SaleInProduct> AddProductToOrder(Order order, int idProduct, int amountToOrder, bool isClubCustomer)
+    {
+        throw new NotImplementedException();
     }
 }

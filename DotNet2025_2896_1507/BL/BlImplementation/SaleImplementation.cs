@@ -49,7 +49,10 @@ internal class SaleImplementation : ISale
     /// <param name="item">המבצע לעדכון</param>
     public void Update(BO.Sale item)
     {
-        _dal.Sale.Update(item.convertSaleToDo());
+        DO.Sale s = BO.Tools.convertSaleToDo(item);
+        _dal.Sale.Update(s);
+
+        //_dal.Sale.Update(item.convertSaleToDo());
     }
 
     /// <summary>

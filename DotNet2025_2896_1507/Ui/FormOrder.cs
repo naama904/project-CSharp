@@ -1,4 +1,5 @@
-﻿using BO;
+﻿using BlApi;
+using BO;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -8,23 +9,47 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Xml.Linq;
 
 namespace Ui
 {
-    public partial class finiishOrder : Form
+    public partial class FormOrder : Form
     {
-
         private static BlApi.IBl s_bl = BlApi.Factory.Get();
-        Order order;
-        public finiishOrder()
+        private Order order = new Order();
+        private int custId;
+        private bool isPreferredCustomer = false;
+        public FormOrder(int identity)
         {
             InitializeComponent();
-            order = new Order();
-
-            selectnameProduct.DataSource = s_bl.Product.ReadAll().ToList();
-            selectnameProduct.DisplayMember = "ProductName"; // מה שמוצג למשתמש
-            selectnameProduct.ValueMember = "IdProduct";// המזהה הפנימי
-
+            try
+            {
+                custId = identity;
+                if (s_bl.Customer.isExistCustomer(custId))
+                {
+                    order.IsPriorityCustomer = true;
+                    isPreferredCustomer = true;
+                    BO.Customer c = new BO.Customer();
+                    c = s_bl.Customer.Read(custId);
+                    label3.Text = c.CustomerName + " שלום ";
+                }
+                else
+                {
+                    label3.Text = "שלום לקוח חדש";
+                }
+                List<Product> listProd = s_bl.Product.ReadAll();
+                foreach (BO.Product p in listProd)
+                {
+                    //cbName.Items.Add(p.ProductName);
+                }
+                selectnameProduct.DataSource = s_bl.Product.ReadAll().ToList();
+                selectnameProduct.DisplayMember = "ProductName"; // מה שמוצג למשתמש
+                selectnameProduct.ValueMember = "IdProduct";// המזהה הפנימי
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "שגיאה", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void addProductToOrder_Click(object sender, EventArgs e)
@@ -39,7 +64,7 @@ namespace Ui
                 listOrder.Items.Clear();
 
                 // הוספת המוצרים לרשימה המוצגת ב-listOrder
-                foreach (var product in order.ProductsListInOrder) // הנחה שיש לך רשימה של מוצרים בהזמנה
+                foreach (var product in order.ProductsListInOrder)
                 {
                     listOrder.Items.Add("שם מוצר " + ":" + product.ProductName + " , " + "כמות בהזמנה" + ":" + product.AmountInOrder + " , " + "מחיר " + ":" + product.FinalPriceForProduct); // או כל תכונה אחרת שתרצה להציג
                 }
@@ -51,16 +76,12 @@ namespace Ui
             {
                 MessageBox.Show(ex.Message);
             }
-
         }
 
         private void finishOrder_Click(object sender, EventArgs e)
         {
             try
             {
-                //חישוב המחיר הסופי של ההזמנה לפני ביצוע
-                s_bl.Order.CalcTotalPrice(order);
-
                 // ביצוע ההזמנה
                 s_bl.Order.doOrder(order);
 
@@ -74,21 +95,14 @@ namespace Ui
                 listOrder.Items.Clear();
 
                 priceToPay.Text = null;
+                label3.Text=string.Empty;
+
+                this.Close();
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
             }
-        }
-
-        private void identity_TextChanged(object sender, EventArgs e)
-        {
-
-            //if (s_bl.Customer.isExistCustomer(int.Parse(identity.Text)))
-            //{
-            //    Customer c=
-            //    witchCustomer.Text = $"שלום :{c.CustomerName}";
-            //}
         }
     }
 }

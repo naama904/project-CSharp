@@ -14,8 +14,8 @@ namespace Ui
 
         private void buttonShopkeeper_Click(object sender, EventArgs e)
         {
-            finiishOrder order = new finiishOrder();
-            order.ShowDialog();
+            FormLogin login = new FormLogin();
+            login.ShowDialog();
         }
 
         private void buttonManagger_Click(object sender, EventArgs e)

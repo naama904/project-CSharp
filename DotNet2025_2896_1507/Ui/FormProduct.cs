@@ -79,21 +79,21 @@ namespace Ui
             {
                 refreshComboBoxes();
                 int id = int.Parse(selectedProduct.SelectedValue.ToString());
-                s_bl.Product.Delete(id);
+                List<Product> products = new List<Product>();
+                products = s_bl.Product.ReadAll();
+                Product p = products.FirstOrDefault(i => i.IdProduct == id);
+                s_bl.Product.Delete(p.IdProduct);
+
+                List<Sale> sales = new List<Sale>();
+                sales = s_bl.Sale.ReadAll();
+                foreach (Sale s in sales)
+                {
+                    if(s.IdProductOfSale == id)
+                        s_bl.Sale.Delete(s.IdSale);
+                }
+
                 MessageBox.Show("deleted successfully");
                 selectedProduct.SelectedItem = null;
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-        }
-
-        private void save_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                int id = int.Parse(selectNameProduct.SelectedValue.ToString());
             }
             catch (Exception ex)
             {
@@ -149,9 +149,10 @@ namespace Ui
                 refreshComboBoxes();
                 listProduct.Items.Clear();
                 int id = int.Parse(selectedProduct.SelectedValue.ToString());
-                Product product = new Product();
-                product = s_bl.Product.Read(id);
-                listProduct.Items.Add(product);
+                List<Product> products = new List<Product>();
+                products = s_bl.Product.ReadAll();
+                Product p = products.FirstOrDefault(i => i.IdProduct == id);
+                listProduct.Items.Add(p);
                 selectedProduct.SelectedItem = null;
             }
             catch (Exception ex)
@@ -160,5 +161,60 @@ namespace Ui
             }
         }
 
-    }
+        private void selectNameProduct_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            refreshComboBoxes();
+            int id;
+            if (!int.TryParse(selectNameProduct.SelectedValue.ToString(), out id))
+            {
+                MessageBox.Show("בחרת מוצרים");
+                return;
+            }
+
+            Product p = s_bl.Product.Read(id);
+
+            if (p != null)
+            {
+                // עדכון השדות עם פרטי הלקוח
+                nameToUpdate.Text = p.ProductName;
+                //categoryToUpdate.Text = p.Category;
+                priceToUpdate.Value = (decimal)p.Price;
+                quentityToUpdate.Value = (decimal)p.AmountInStock;
+            }
+            else
+            {
+                MessageBox.Show("מוצר לא נמצא");
+            }
+        }
+        private void save_Click(object sender, EventArgs e)
+        {
+            try {
+                int id = int.Parse(selectNameProduct.SelectedValue.ToString());
+                List<Product> products = new List<Product>();
+                products = s_bl.Product.ReadAll();
+                Product p = products.FirstOrDefault(i => i.IdProduct == id);
+
+                p.ProductName = nameToUpdate.Text;
+                //p.Category = categoryToUpdate.Text;
+                p.Price = (double?)priceToUpdate.Value;
+                p.AmountInStock = (int?)quentityToUpdate.Value;
+
+                s_bl.Product.Update(p);
+
+                MessageBox.Show("השינווים נשמרו");
+
+                nameToUpdate.Text = string.Empty;
+                categoryToUpdate.Text = string.Empty;
+                priceToUpdate.Value = 0;
+                quentityToUpdate.Value = 0;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+
+        }
+           
 }
+    }
+

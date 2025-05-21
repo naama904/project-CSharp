@@ -7,27 +7,21 @@
     <Phone>0556895874</Phone>
   </Customer>
   <Customer>
-    <Identity>365858745</Identity>
-    <CustomerName>יעל שטרן</CustomerName>
-    <Address>קצות החושן 4</Address>
-    <Phone>0556785962</Phone>
-  </Customer>
-  <Customer>
-    <Identity>225658745</Identity>
-    <CustomerName>מיכל כהן</CustomerName>
-    <Address>אידלסון 6</Address>
-    <Phone>025689547</Phone>
-  </Customer>
-  <Customer>
     <Identity>223358953</Identity>
     <CustomerName>שירה שוורץ</CustomerName>
     <Address>זית רענן15</Address>
     <Phone>0527185956</Phone>
   </Customer>
   <Customer>
-    <Identity>328574587</Identity>
-    <CustomerName>אפרת שאול</CustomerName>
-    <Address>יהודה הנשיא 5</Address>
-    <Phone>0534142314</Phone>
+    <Identity>225658745</Identity>
+    <CustomerName>מיכל כהן</CustomerName>
+    <Address>אידלסון 5</Address>
+    <Phone>085689547</Phone>
+  </Customer>
+  <Customer>
+    <Identity>365858745</Identity>
+    <CustomerName>יעל שטרן</CustomerName>
+    <Address>קצות החושן 2</Address>
+    <Phone>0556785962</Phone>
   </Customer>
 </ArrayOfCustomer>

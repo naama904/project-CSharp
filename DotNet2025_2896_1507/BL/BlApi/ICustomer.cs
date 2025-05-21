@@ -11,4 +11,6 @@ public interface ICustomer
     void Update(Customer item);
     void Delete(int id);
     bool isExistCustomer(int id);
+    bool Read(string text);
+   
 }

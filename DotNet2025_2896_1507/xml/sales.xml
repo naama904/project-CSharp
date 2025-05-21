@@ -10,48 +10,75 @@
     <EndSale>2025-05-08T00:00:00+03:00</EndSale>
   </Sale>
   <Sale>
-    <IdSale>502</IdSale>
+    <IdSale>507</IdSale>
     <IdProductOfSale>102</IdProductOfSale>
-    <AmountToGetSale>1</AmountToGetSale>
-    <SumPrice>19.9</SumPrice>
+    <AmountToGetSale>3</AmountToGetSale>
+    <SumPrice>20.9</SumPrice>
     <IsForAllCustomers>false</IsForAllCustomers>
-    <StartSale>2025-05-01T00:00:00+03:00</StartSale>
-    <EndSale>2025-05-06T00:00:00+03:00</EndSale>
+    <StartSale>2025-05-21T15:42:43.8008199+03:00</StartSale>
+    <EndSale>2025-05-28T15:42:43.785</EndSale>
   </Sale>
   <Sale>
-    <IdSale>503</IdSale>
+    <IdSale>508</IdSale>
     <IdProductOfSale>103</IdProductOfSale>
     <AmountToGetSale>2</AmountToGetSale>
-    <SumPrice>60</SumPrice>
+    <SumPrice>50</SumPrice>
     <IsForAllCustomers>false</IsForAllCustomers>
-    <StartSale>2025-05-01T00:00:00+03:00</StartSale>
-    <EndSale>2025-05-04T00:00:00+03:00</EndSale>
+    <StartSale>2025-05-19T19:46:46.862974+03:00</StartSale>
+    <EndSale>2025-06-19T19:46:46.8574872+03:00</EndSale>
   </Sale>
   <Sale>
-    <IdSale>504</IdSale>
+    <IdSale>509</IdSale>
+    <IdProductOfSale>112</IdProductOfSale>
+    <AmountToGetSale>3</AmountToGetSale>
+    <SumPrice>12</SumPrice>
+    <IsForAllCustomers>false</IsForAllCustomers>
+    <StartSale>2025-05-13T17:52:30.4443144+03:00</StartSale>
+    <EndSale>2025-05-21T17:52:30.4382934+03:00</EndSale>
+  </Sale>
+  <Sale>
+    <IdSale>512</IdSale>
+    <IdProductOfSale>104</IdProductOfSale>
+    <AmountToGetSale>1</AmountToGetSale>
+    <SumPrice>4000</SumPrice>
+    <IsForAllCustomers>true</IsForAllCustomers>
+    <StartSale>2025-05-14T18:36:12.4795786+03:00</StartSale>
+    <EndSale>2025-05-21T18:36:12.4756211+03:00</EndSale>
+  </Sale>
+  <Sale>
+    <IdSale>515</IdSale>
     <IdProductOfSale>104</IdProductOfSale>
     <AmountToGetSale>1</AmountToGetSale>
     <SumPrice>4850</SumPrice>
     <IsForAllCustomers>true</IsForAllCustomers>
-    <StartSale>2025-05-01T00:00:00+03:00</StartSale>
-    <EndSale>2025-05-11T00:00:00+03:00</EndSale>
+    <StartSale>2025-05-19T18:51:48.6408458+03:00</StartSale>
+    <EndSale>2025-05-19T18:51:48.6357341+03:00</EndSale>
   </Sale>
   <Sale>
-    <IdSale>505</IdSale>
-    <IdProductOfSale>105</IdProductOfSale>
+    <IdSale>517</IdSale>
+    <IdProductOfSale>104</IdProductOfSale>
     <AmountToGetSale>1</AmountToGetSale>
-    <SumPrice>70</SumPrice>
+    <SumPrice>4850</SumPrice>
     <IsForAllCustomers>true</IsForAllCustomers>
-    <StartSale>2025-05-01T00:00:00+03:00</StartSale>
-    <EndSale>2025-05-09T00:00:00+03:00</EndSale>
+    <StartSale>2025-05-19T18:56:18.0381518+03:00</StartSale>
+    <EndSale>2025-05-19T18:56:18.0317092+03:00</EndSale>
   </Sale>
   <Sale>
-    <IdSale>506</IdSale>
-    <IdProductOfSale>102</IdProductOfSale>
-    <AmountToGetSale>3</AmountToGetSale>
-    <SumPrice>12</SumPrice>
+    <IdSale>518</IdSale>
+    <IdProductOfSale>104</IdProductOfSale>
+    <AmountToGetSale>2</AmountToGetSale>
+    <SumPrice>4850</SumPrice>
     <IsForAllCustomers>true</IsForAllCustomers>
-    <StartSale>2025-05-09T11:27:33.663223+03:00</StartSale>
-    <EndSale>2025-05-16T11:27:33.658</EndSale>
+    <StartSale>2025-05-19T19:31:09.0039729+03:00</StartSale>
+    <EndSale>2025-05-19T19:31:09.0007643+03:00</EndSale>
+  </Sale>
+  <Sale>
+    <IdSale>521</IdSale>
+    <IdProductOfSale>111</IdProductOfSale>
+    <AmountToGetSale>2</AmountToGetSale>
+    <SumPrice>20</SumPrice>
+    <IsForAllCustomers>true</IsForAllCustomers>
+    <StartSale>2025-05-21T15:42:43.8008199+03:00</StartSale>
+    <EndSale>2025-05-28T15:42:43.785</EndSale>
   </Sale>
 </ArrayOfSale>

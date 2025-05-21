@@ -12,8 +12,6 @@ using System.Windows.Forms;
 using System.Xml.Linq;
 using BO;
 
-
-
 namespace Ui
 {
     public partial class FormSale : Form
@@ -31,9 +29,9 @@ namespace Ui
             selectProductReadSale.DisplayMember = "ProductName"; // מה שמוצג למשתמש
             selectProductReadSale.ValueMember = "IdProduct";// המזהה הפנימי
 
-            selectProductToDeleteSale.DataSource = s_bl.Product.ReadAll().ToList();
-            selectProductToDeleteSale.DisplayMember = "ProductName"; // מה שמוצג למשתמש
-            selectProductToDeleteSale.ValueMember = "IdProduct";// המזהה הפנימי
+            selectSaleToDeleteSale.DataSource = s_bl.Sale.ReadAll().ToList();
+            selectSaleToDeleteSale.DisplayMember = "IdSale"; // מה שמוצג למשתמש
+            selectSaleToDeleteSale.ValueMember = "IdSale";// המזהה הפנימי
 
             selectSaleToUpdate.DataSource = s_bl.Sale.ReadAll().ToList();
             selectSaleToUpdate.DisplayMember = "IdSale";
@@ -116,15 +114,15 @@ namespace Ui
         {
             try
             {
-                int id = int.Parse(selectProductToDeleteSale.SelectedValue.ToString());
+                int id = int.Parse(selectSaleToDeleteSale.SelectedValue.ToString());
                 List<Sale> sales = new List<Sale>();
                 sales = s_bl.Sale.ReadAll();
-                Sale s = sales.FirstOrDefault(i => i.IdProductOfSale == id);
-                s_bl.Sale.Delete(s.IdSale);
+                Sale s = sales.FirstOrDefault(i => i.IdSale == id);
+                s_bl.Sale.Delete(id);
 
                 MessageBox.Show("deleted succsessfully");
 
-                selectProductToDeleteSale.SelectedItem = null;
+                selectSaleToDeleteSale.SelectedItem = null;
             }
             catch (Exception ex)
             {
@@ -150,39 +148,66 @@ namespace Ui
             }
         }
 
-       private void selectSaleToUpdate_SelectedIndexChanged(object sender, EventArgs e)
-{
-    if (selectSaleToUpdate.SelectedValue == null)
-    {
-        MessageBox.Show("לא נבחר מבצע.");
-        return;
-    }
+        private void selectSaleToUpdate_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (selectSaleToUpdate.SelectedValue == null)
+            {
+                MessageBox.Show("לא נבחר מבצע.");
+                return;
+            }
 
-    int id;
-    if (!int.TryParse(selectSaleToUpdate.SelectedValue.ToString(), out id))
-    {
-        MessageBox.Show("בחרת מבצעים");
-        return;
-    }
+            int id;
+            if (!int.TryParse(selectSaleToUpdate.SelectedValue.ToString(), out id))
+            {
+                MessageBox.Show("בחרת מבצעים");
+                return;
+            }
 
-    Sale sale = s_bl.Sale.Read(id);
-    if (sale != null)
-    {
-        productToSale.Text = sale.IdProductOfSale.ToString();
-        acountToGetSale.Value = sale.AmountToGetSale;
-        saleAllCustomer.Checked = sale.IsForAllCustomers;
-        saleClubCustomer.Checked = !sale.IsForAllCustomers;
-        dateTimePickerStart.Value = sale.StartSale ?? DateTime.Now;
-        dateTimePickerEnd.Value = sale.EndSale ?? DateTime.Now;
-    }
-    else
-    {
-        MessageBox.Show("מבצע לא נמצא");
-    }
-}
+            Sale sale = s_bl.Sale.Read(id);
+            if (sale != null)
+            {
+                productToSale.Text = sale.IdProductOfSale.ToString();
+                acountToGetSale.Value = (decimal)sale.AmountToGetSale;
+                sumPriceSale.Value = (decimal)sale.SumPrice;
+                saleAllCustomer.Checked = sale.IsForAllCustomers;
+                saleClubCustomer.Checked = sale.IsForAllCustomers;
+                dateTimePickerStart.Value = sale.StartSale ?? DateTime.Now;
+                dateTimePickerEnd.Value = sale.EndSale ?? DateTime.Now;
+            }
+            else
+            {
+                MessageBox.Show("מבצע לא נמצא");
+            }
+        }
 
         private void buttonSaveS_Click(object sender, EventArgs e)
         {
+            try
+            {
+                int id = int.Parse(selectSaleToUpdate.SelectedValue.ToString());
+                Sale s = s_bl.Sale.Read(id);
+
+                s.IdProductOfSale = int.Parse(productToSale.Text);
+                s.AmountToGetSale = (int)acountToGetSale.Value;
+                s.SumPrice = (double)sumPriceSale.Value;
+                //s.IsForAllCustomers = saleAllCustomer;
+                s.StartSale = dateStart.Value;
+                s.EndSale = dateEnd.Value;
+                s_bl.Sale.Update(s);
+
+                MessageBox.Show("השינווים נשמרו");
+
+                productToSale.Text = string.Empty;
+                acountToGetSale.Value = 0;
+                sumPriceSale.Value = 0;
+                //saleAllCustomer.Value = 0;
+                dateStart.Value = DateTime.Now;
+                dateEnd.Value = DateTime.Now;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
 
         }
 
