@@ -37,7 +37,12 @@ namespace Ui
             selectSaleToUpdate.DisplayMember = "IdSale";
             selectSaleToUpdate.ValueMember = "IdSale";
         }
-
+        private void refreshComboBoxes()
+        {
+            var salse = s_bl.Sale.ReadAll().ToList();
+            selectSaleToDeleteSale.DataSource = salse;
+            selectSaleToUpdate.DataSource = salse;
+        }
         private void buttonSaveSale_Click(object sender, EventArgs e)
         {
             try
@@ -60,6 +65,14 @@ namespace Ui
 
                 MessageBox.Show("the sale added successfully");
 
+                selectProductToSale.Text = string.Empty;
+                amountToGetSale.Text = string.Empty;
+                priceInSale.Text = string.Empty;
+                //saleAllCustomer.Value = 0;
+                dateStart.Value = DateTime.Now;
+                dateEnd.Value = DateTime.Now;
+                refreshComboBoxes();
+
             }
             catch (Exception ex)
             {
@@ -70,13 +83,12 @@ namespace Ui
         {
             try
             {
-                listSale.Items.Clear();
+
+                listSale.DataSource = null;
                 List<Sale> sales = new List<Sale>();
                 sales = s_bl.Sale.ReadAll();
-                foreach (Sale sale in sales)
-                {
-                    listSale.Items.Add(sale);
-                }
+                listSale.Items.Clear();
+                listSale.DataSource = sales.SelectMany(c => c.ToString().Split("\n")).ToList();
             }
             catch (Exception ex)
             {
@@ -88,15 +100,23 @@ namespace Ui
         {
             try
             {
-                listSale.Items.Clear();
+                listSale.DataSource = null;
                 int idProduct = int.Parse(selectProductReadSale.SelectedValue.ToString());
-                List<Sale> sales = new List<Sale>();
-                sales = s_bl.Sale.ReadAll();
+                List<Sale> sales = s_bl.Sale.ReadAll();
                 Sale s = sales.FirstOrDefault(i => i.IdProductOfSale == idProduct);
-
                 if (s != null)
                 {
-                    listSale.Items.Add(s);
+                    List<string> salesDetail = new List<string>
+                        {
+                          "idSale  :" + s.IdSale,
+                          "name :" + s.IdProductOfSale,
+                          "address :" + s.AmountToGetSale,
+                          "sumPrice :" + s.SumPrice,
+                          "isForAllCustomer :" + s.IsForAllCustomers,
+                          "startSale :" + s.StartSale,
+                          "endSale :" + s.EndSale
+                        };
+                    listSale.DataSource = salesDetail;
                 }
                 else
                 {
@@ -115,14 +135,15 @@ namespace Ui
             try
             {
                 int id = int.Parse(selectSaleToDeleteSale.SelectedValue.ToString());
-                List<Sale> sales = new List<Sale>();
-                sales = s_bl.Sale.ReadAll();
-                Sale s = sales.FirstOrDefault(i => i.IdSale == id);
+                //List<Sale> sales = new List<Sale>();
+                //sales = s_bl.Sale.ReadAll();
+                //Sale s = sales.FirstOrDefault(i => i.IdSale == id);
                 s_bl.Sale.Delete(id);
 
                 MessageBox.Show("deleted succsessfully");
 
                 selectSaleToDeleteSale.SelectedItem = null;
+                refreshComboBoxes();
             }
             catch (Exception ex)
             {
@@ -134,13 +155,11 @@ namespace Ui
         {
             try
             {
-                listSale.Items.Clear();
+                listSale.DataSource = null;
                 List<Sale> sales = new List<Sale>();
                 sales = s_bl.Sale.ReadAll(i => i.IsForAllCustomers);
-                foreach (Sale sale in sales)
-                {
-                    listSale.Items.Add(sale);
-                }
+                listSale.Items.Clear();
+                listSale.DataSource = sales.SelectMany(s => s.ToString().Split("\n")).ToList();
             }
             catch (Exception ex)
             {
@@ -190,7 +209,7 @@ namespace Ui
                 s.IdProductOfSale = int.Parse(productToSale.Text);
                 s.AmountToGetSale = (int)acountToGetSale.Value;
                 s.SumPrice = (double)sumPriceSale.Value;
-                //s.IsForAllCustomers = saleAllCustomer;
+                s.IsForAllCustomers = saleAllCustomer.Checked;
                 s.StartSale = dateStart.Value;
                 s.EndSale = dateEnd.Value;
                 s_bl.Sale.Update(s);
@@ -203,6 +222,7 @@ namespace Ui
                 //saleAllCustomer.Value = 0;
                 dateStart.Value = DateTime.Now;
                 dateEnd.Value = DateTime.Now;
+                refreshComboBoxes();
             }
             catch (Exception ex)
             {
@@ -212,6 +232,11 @@ namespace Ui
         }
 
         private void listSale_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void priceInSale_TextChanged(object sender, EventArgs e)
         {
 
         }

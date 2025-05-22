@@ -97,37 +97,43 @@ internal static class Tools
     //    return sb.ToString();
     //}
 
-    public static string ToStringProperty<T>(this T obj)
-
-    {
-        StringBuilder str = new StringBuilder();
-        foreach (PropertyInfo item in obj.GetType().GetProperties())
-        {
-            str.AppendLine($"{item.Name} :{item.GetValue(obj)}");
-        }
-        return str.ToString();
-
-    }
-
     //public static string ToStringProperty<T>(this T obj)
+
     //{
-    //    string str = "";
-    //    Type Ttype = obj.GetType();
-    //    PropertyInfo[] info = Ttype.GetProperties();
-    //    foreach (PropertyInfo item in info)
+    //    StringBuilder str = new StringBuilder();
+    //    foreach (PropertyInfo item in obj.GetType().GetProperties())
     //    {
-    //        if (typeof(IEnumerable).IsAssignableFrom(item.PropertyType) && item.PropertyType != typeof(string))
-    //        {
-    //            IEnumerable collection = item.GetValue(obj) as IEnumerable;
-    //            foreach (var x in collection)
-    //            {
-    //                str += x.ToStringProperty();
-    //            }
-    //        }
-    //        else
-    //            str += string.Format("name: {0,-15} value: {1,-15}\n", item.Name, item.GetValue(obj, null));
+    //        str.AppendLine($"{item.Name} :{item.GetValue(obj)}");
     //    }
-    //    return str;
+    //    return str.ToString();
 
     //}
+    public static string ToStringProperty<T>(this T t)
+    {
+        string str = "";
+        Type Ttype = t.GetType();
+        PropertyInfo[] info = Ttype.GetProperties();
+        foreach (PropertyInfo item in info)
+        {
+            if (typeof(IEnumerable).IsAssignableFrom(item.PropertyType) && item.PropertyType != typeof(string))
+            {
+                IEnumerable collection = item.GetValue(t) as IEnumerable;
+                if (collection != null)
+                {
+                    foreach (var x in collection)
+                    {
+                        str += x.ToStringProperty();
+                    }
+                }
+                else
+                {
+                    str += string.Format("{0}: {1}  \n", item.Name, item.GetValue(t, null));
+                }
+            }
+            else
+                str += string.Format("{0}: {1}  \n", item.Name, item.GetValue(t, null));
+        }
+        return str;
+    }
+
 }

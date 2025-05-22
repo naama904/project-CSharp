@@ -35,6 +35,13 @@ namespace Ui
             selectCustomerUpdate.ValueMember = "Identity";// המזהה הפנימי
 
         }
+        private void refreshComboBoxes()
+        {
+            var customer = s_bl.Product.ReadAll().ToList();
+            selectIdentity.DataSource = customer;
+            selectCustomer.DataSource = customer;
+            selectCustomerUpdate.DataSource = customer;
+        }
 
         private void buttonSaveCustomer_Click(object sender, EventArgs e)
         {
@@ -53,6 +60,7 @@ namespace Ui
                 nameCustomer.Text = string.Empty;
                 address.Text = string.Empty;
                 phone.Text = string.Empty;
+                refreshComboBoxes();
             }
             catch (Exception ex)
             {
@@ -68,6 +76,7 @@ namespace Ui
                 s_bl.Customer.Delete(id);
                 MessageBox.Show("deleted successfully");
                 selectCustomer.SelectedItem = null;
+                refreshComboBoxes();
             }
             catch (Exception ex)
             {
@@ -79,14 +88,11 @@ namespace Ui
         {
             try
             {
-                listCustomer.Items.Clear();
+                listCustomer.DataSource = null;
                 List<Customer> customers = new List<Customer>();
                 customers = s_bl.Customer.ReadAll();
-                foreach (Customer customer in customers)
-                {
-                    //listProduct.Items.Add(product);
-                    listCustomer.Items.Add(customer);
-                }
+                listCustomer.Items.Clear();
+                listCustomer.DataSource = customers.SelectMany(c => c.ToString().Split("\n")).ToList();
             }
             catch (Exception ex)
             {
@@ -98,13 +104,11 @@ namespace Ui
         {
             try
             {
-                listCustomer.Items.Clear();
+                listCustomer.DataSource=null;
                 List<Customer> customers = new List<Customer>();
                 customers = s_bl.Customer.ReadAll(i => i.Phone[1] == '8');
-                foreach (Customer customer in customers)
-                {
-                    listCustomer.Items.Add(customer);
-                }
+                listCustomer.Items.Clear();
+                listCustomer.DataSource=customers.SelectMany(c=>c.ToString().Split("\n")).ToList();
             }
             catch (Exception ex)
             {
@@ -116,11 +120,18 @@ namespace Ui
         {
             try
             {
-                listCustomer.Items.Clear();
+                listCustomer.DataSource=null;
                 int id = int.Parse(selectIdentity.SelectedValue.ToString());
-                Customer customer = new Customer();
-                customer = s_bl.Customer.Read(id);
-                listCustomer.Items.Add(customer);
+                Customer customer = s_bl.Customer.Read(id);
+
+                List<string> customerDetails = new List<string>
+                        {
+                          "identity  :" + customer.Identity,
+                          "name :" + customer.CustomerName,
+                          "address :" + customer.Address,
+                          "phone :" + customer.Phone
+                };
+                listCustomer.DataSource = customerDetails;
             }
             catch (Exception ex)
             {
@@ -137,7 +148,7 @@ namespace Ui
                 return;
             }
 
-         
+
 
             Customer customer = s_bl.Customer.Read(id);
             if (customer != null)
@@ -157,10 +168,7 @@ namespace Ui
         {
             try
             {
-
                 int id = int.Parse(selectCustomerUpdate.SelectedValue.ToString());
-
-
                 Customer customer = s_bl.Customer.Read(id);
 
                 customer.CustomerName = nameToUpdate.Text;
@@ -174,6 +182,7 @@ namespace Ui
                 nameToUpdate.Text = string.Empty;
                 addressToUpdate.Text = string.Empty;
                 phoneToUpdate.Text = string.Empty;
+                refreshComboBoxes();
             }
             catch (Exception ex)
             {

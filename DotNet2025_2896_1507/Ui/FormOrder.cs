@@ -56,27 +56,24 @@ namespace Ui
         {
             try
             {
+                listOrder.Items.Clear();
                 int id = int.Parse(selectnameProduct.SelectedValue.ToString());
-
                 s_bl.Order.AddProductToOrder(order, id, (int)AmountToOrder.Value);
 
-                // ניקוי הרשימה הקיימת
-                listOrder.Items.Clear();
-
-                // הוספת המוצרים לרשימה המוצגת ב-listOrder
                 foreach (var product in order.ProductsListInOrder)
                 {
-                    listOrder.Items.Add("שם מוצר " + ":" + product.ProductName + " , " + "כמות בהזמנה" + ":" + product.AmountInOrder + " , " + "מחיר " + ":" + product.FinalPriceForProduct); // או כל תכונה אחרת שתרצה להציג
+                    listOrder.Items.Add("שם מוצר: " + product.ProductName + " , " + "כמות בהזמנה: " + product.AmountInOrder + " , " + "מחיר: " + product.FinalPriceForProduct);
                 }
 
                 selectnameProduct.SelectedItem = null;
                 AmountToOrder.Value = 1;
             }
-            catch (Exception ex)
+            catch (Exception ex) 
             {
                 MessageBox.Show(ex.Message);
             }
         }
+
 
         private void finishOrder_Click(object sender, EventArgs e)
         {

@@ -261,6 +261,7 @@
             listProduct.ItemHeight = 22;
             listProduct.Location = new Point(19, 19);
             listProduct.Name = "listProduct";
+            listProduct.RightToLeft = RightToLeft.No;
             listProduct.Size = new Size(468, 422);
             listProduct.TabIndex = 0;
             // 

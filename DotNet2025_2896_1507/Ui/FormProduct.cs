@@ -2,6 +2,7 @@
 using BO;
 using DalApi;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -50,7 +51,6 @@ namespace Ui
                 MessageBox.Show("נא למלא את כל השדות החיוניים.");
                 return;
             }
-
             try
             {
                 Product p = new Product();
@@ -67,6 +67,8 @@ namespace Ui
                 category.SelectedItem = null;
                 price.Value = 0;
                 quentity.Value = 0;
+
+                refreshComboBoxes();
             }
             catch (Exception ex)
             {
@@ -77,23 +79,20 @@ namespace Ui
         {
             try
             {
-                refreshComboBoxes();
                 int id = int.Parse(selectedProduct.SelectedValue.ToString());
-                List<Product> products = new List<Product>();
-                products = s_bl.Product.ReadAll();
-                Product p = products.FirstOrDefault(i => i.IdProduct == id);
-                s_bl.Product.Delete(p.IdProduct);
+                s_bl.Product.Delete(id);
 
                 List<Sale> sales = new List<Sale>();
                 sales = s_bl.Sale.ReadAll();
                 foreach (Sale s in sales)
                 {
-                    if(s.IdProductOfSale == id)
+                    if (s.IdProductOfSale == id)
                         s_bl.Sale.Delete(s.IdSale);
                 }
 
                 MessageBox.Show("deleted successfully");
                 selectedProduct.SelectedItem = null;
+                refreshComboBoxes();
             }
             catch (Exception ex)
             {
@@ -105,15 +104,11 @@ namespace Ui
         {
             try
             {
-                refreshComboBoxes();
-                listProduct.Items.Clear();
+                listProduct.DataSource = null;
                 List<Product> products = new List<Product>();
                 products = s_bl.Product.ReadAll();
-                foreach (Product product in products)
-                {
-                    //listProduct.Items.Add(product);
-                    listProduct.Items.Add(product);
-                }
+                listProduct.Items.Clear();
+                listProduct.DataSource = products.SelectMany(p => p.ToString().Split("\n")).ToList();
             }
             catch (Exception ex)
             {
@@ -121,20 +116,14 @@ namespace Ui
             }
         }
 
-
-
         private void buttonReadByParam_Click(object sender, EventArgs e)
         {
             try
             {
-                refreshComboBoxes();
-                listProduct.Items.Clear();
+                listProduct.DataSource = null;
                 List<Product> products = new List<Product>();
                 products = s_bl.Product.ReadAll(i => i.Price < 100);
-                foreach (Product product in products)
-                {
-                    listProduct.Items.Add(product);
-                }
+                listProduct.DataSource = products.SelectMany(p => p.ToString().Split("\n")).ToList();
             }
             catch (Exception ex)
             {
@@ -146,14 +135,19 @@ namespace Ui
         {
             try
             {
-                refreshComboBoxes();
-                listProduct.Items.Clear();
-                int id = int.Parse(selectedProduct.SelectedValue.ToString());
-                List<Product> products = new List<Product>();
-                products = s_bl.Product.ReadAll();
-                Product p = products.FirstOrDefault(i => i.IdProduct == id);
-                listProduct.Items.Add(p);
-                selectedProduct.SelectedItem = null;
+                listProduct.DataSource = null; 
+                int id = int.Parse(readOneProduct.SelectedValue.ToString());
+                Product p = s_bl.Product.Read(id);
+
+                List<string> productDetails = new List<string>
+                {
+                  "מוצר  :" + p.IdProduct,
+                  "שם מוצר :" + p.ProductName,
+                  "קטגוריה :" + p.Category,
+                  "מחיר :" + p.Price,
+                  "כמות במלאי :" + p.AmountInStock
+        };
+                listProduct.DataSource = productDetails; 
             }
             catch (Exception ex)
             {
@@ -161,23 +155,28 @@ namespace Ui
             }
         }
 
+
         private void selectNameProduct_SelectedIndexChanged(object sender, EventArgs e)
         {
-            refreshComboBoxes();
+            if (selectNameProduct.SelectedValue == null)
+            {
+                MessageBox.Show("לא נבחר מוצר.");
+                return;
+            }
+
             int id;
             if (!int.TryParse(selectNameProduct.SelectedValue.ToString(), out id))
             {
                 MessageBox.Show("בחרת מוצרים");
                 return;
             }
-
             Product p = s_bl.Product.Read(id);
 
             if (p != null)
             {
-                // עדכון השדות עם פרטי הלקוח
+                // עדכון השדות עם פרטי המוצר
                 nameToUpdate.Text = p.ProductName;
-                //categoryToUpdate.Text = p.Category;
+                //categoryToUpdate.SelectedItem = Enum.Parse(typeof(Categories), p.Category);
                 priceToUpdate.Value = (decimal)p.Price;
                 quentityToUpdate.Value = (decimal)p.AmountInStock;
             }
@@ -185,17 +184,18 @@ namespace Ui
             {
                 MessageBox.Show("מוצר לא נמצא");
             }
+
         }
         private void save_Click(object sender, EventArgs e)
         {
-            try {
+            try
+            {
                 int id = int.Parse(selectNameProduct.SelectedValue.ToString());
-                List<Product> products = new List<Product>();
-                products = s_bl.Product.ReadAll();
-                Product p = products.FirstOrDefault(i => i.IdProduct == id);
+
+                Product p = s_bl.Product.Read(id);
 
                 p.ProductName = nameToUpdate.Text;
-                //p.Category = categoryToUpdate.Text;
+                //p.Category = ((Categories)categoryToUpdate.SelectedItem).ToString();
                 p.Price = (double?)priceToUpdate.Value;
                 p.AmountInStock = (int?)quentityToUpdate.Value;
 
@@ -207,14 +207,14 @@ namespace Ui
                 categoryToUpdate.Text = string.Empty;
                 priceToUpdate.Value = 0;
                 quentityToUpdate.Value = 0;
+
+                refreshComboBoxes();
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
             }
-
         }
-           
-}
     }
+}
 

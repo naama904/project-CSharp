@@ -19,9 +19,21 @@
     <Phone>085689547</Phone>
   </Customer>
   <Customer>
-    <Identity>365858745</Identity>
-    <CustomerName>יעל שטרן</CustomerName>
-    <Address>קצות החושן 2</Address>
-    <Phone>0556785962</Phone>
+    <Identity>325562365</Identity>
+    <CustomerName>משהו</CustomerName>
+    <Address>גם משהו</Address>
+    <Phone>085623652</Phone>
+  </Customer>
+  <Customer>
+    <Identity>123</Identity>
+    <CustomerName>עעע</CustomerName>
+    <Address>עאעאע</Address>
+    <Phone>02545</Phone>
+  </Customer>
+  <Customer>
+    <Identity>323232323</Identity>
+    <CustomerName>אילה</CustomerName>
+    <Address>מודיעין</Address>
+    <Phone>089562365</Phone>
   </Customer>
 </ArrayOfCustomer>

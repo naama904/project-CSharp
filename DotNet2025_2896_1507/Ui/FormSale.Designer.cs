@@ -246,6 +246,7 @@
             priceInSale.Name = "priceInSale";
             priceInSale.Size = new Size(208, 38);
             priceInSale.TabIndex = 1;
+            priceInSale.TextChanged += priceInSale_TextChanged;
             // 
             // tabPage2
             // 
@@ -321,6 +322,7 @@
             listSale.ItemHeight = 21;
             listSale.Location = new Point(19, 19);
             listSale.Name = "listSale";
+            listSale.RightToLeft = RightToLeft.No;
             listSale.Size = new Size(502, 424);
             listSale.TabIndex = 0;
             listSale.SelectedIndexChanged += listSale_SelectedIndexChanged;

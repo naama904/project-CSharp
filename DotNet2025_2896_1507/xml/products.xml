@@ -5,13 +5,27 @@
     <ProductName>צמיד כסף</ProductName>
     <Category>צמידים_ועגילים</Category>
     <Price>75</Price>
-    <AmountInStock>22</AmountInStock>
+    <AmountInStock>20</AmountInStock>
   </Product>
   <Product>
-    <IdProduct>112</IdProduct>
-    <ProductName>bgbgbgbg</ProductName>
-    <Category>צמידים_ועגילים</Category>
-    <Price>5</Price>
+    <IdProduct>113</IdProduct>
+    <ProductName>עגלת בוגבו</ProductName>
+    <Category>עגלות</Category>
+    <Price>5000</Price>
+    <AmountInStock>46</AmountInStock>
+  </Product>
+  <Product>
+    <IdProduct>118</IdProduct>
+    <ProductName>הכ</ProductName>
+    <Category>בגדים</Category>
+    <Price>10</Price>
     <AmountInStock>3</AmountInStock>
+  </Product>
+  <Product>
+    <IdProduct>119</IdProduct>
+    <ProductName>טחט</ProductName>
+    <Category>בגדים</Category>
+    <Price>256</Price>
+    <AmountInStock>23</AmountInStock>
   </Product>
 </ArrayOfProduct>

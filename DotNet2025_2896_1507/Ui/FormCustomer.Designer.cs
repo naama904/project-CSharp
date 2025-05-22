@@ -251,6 +251,7 @@
             listCustomer.ItemHeight = 21;
             listCustomer.Location = new Point(19, 19);
             listCustomer.Name = "listCustomer";
+            listCustomer.RightToLeft = RightToLeft.No;
             listCustomer.Size = new Size(466, 424);
             listCustomer.TabIndex = 0;
             // 
