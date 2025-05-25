@@ -36,4 +36,16 @@
     <Address>מודיעין</Address>
     <Phone>089562365</Phone>
   </Customer>
+  <Customer>
+    <Identity>337235758</Identity>
+    <CustomerName>קלמן פנדרמרשר</CustomerName>
+    <Address>שאגת אריה 16</Address>
+    <Phone>0775432158</Phone>
+  </Customer>
+  <Customer>
+    <Identity>652236523</Identity>
+    <CustomerName>אפרת לוי</CustomerName>
+    <Address>ירושלים</Address>
+    <Phone>089797456</Phone>
+  </Customer>
 </ArrayOfCustomer>

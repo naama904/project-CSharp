@@ -9,18 +9,12 @@ internal class OrderImplementation : IOrder
 {
     private DalApi.IDal _dal = DalApi.Factory.Get;
 
-    //public BO.Order createOrder()
-    //{
-    //    return new BO.Order();
-    //}
     public List<BO.SaleInProduct> AddProductToOrder(BO.Order order, int idProduct, int amountToOrder)
     {
-        try
-        {
             BO.Product p = _dal.Product.Read(idProduct).convertProductToBo();
             if (p == null)
             {
-                throw new BlIdNotExist();
+                throw new BlIdNotExist("product not exist");
             }
             List<BO.SaleInProduct> salesThatUsed = new List<BO.SaleInProduct>();
             //חיפוש המוצר ברשימת המוצרים שבהזמנה
@@ -38,7 +32,7 @@ internal class OrderImplementation : IOrder
                 //אם הכמות במלאי אינה מספיקה
                 else
                 {
-                    throw new BlNotEnoughInStock("not enough in stock");
+                    throw new BO.BlNotEnoughInStock("not enough in stock");
                 }
             }
             //אם המוצר לא קיים בהזמנה
@@ -58,7 +52,7 @@ internal class OrderImplementation : IOrder
                 //אם אין מספיק במלאי
                 else
                 {
-                    throw new BlNotEnoughInStock("not nough in stock");
+                    throw new BO.BlNotEnoughInStock("not enough in stock");
                 }
             }
             searchSaleForProduct(isProductInOrder, order.IsPriorityCustomer);
@@ -66,11 +60,6 @@ internal class OrderImplementation : IOrder
             salesThatUsed = isProductInOrder.SalesListForThisProduct;
             CalcTotalPrice(order);
             return salesThatUsed;
-        }
-        catch (Exception exe)
-        {
-            Console.WriteLine(exe.ToString);
-        }
         return null;
     }
     public void CalcTotalPrice(BO.Order order)
@@ -79,38 +68,19 @@ internal class OrderImplementation : IOrder
     }
     public void CalcTotalPriceForProduct(BO.ProductInOrder product)
     {
-        //רשימה למבצעים שמומשו
-        List<BO.SaleInProduct> listSaleThatUsed = new List<BO.SaleInProduct>();
-        if (product.SalesListForThisProduct == null)
+        int count = product.AmountInOrder;
+        List<BO.SaleInProduct> listSalesUsed = new();
+        foreach (BO.SaleInProduct sale in product.SalesListForThisProduct)
         {
-            product.FinalPriceForProduct = product.BasicPriceForProduct * product.AmountInOrder;
-        }
-        else
-        {
-            int count = product.AmountInOrder;
-            double totalPrice = 0;
-            product.BasicPriceForProduct = (double)_dal.Product.Read(product.IdProduct).Price;
-            foreach (BO.SaleInProduct s in product.SalesListForThisProduct)
+            if (count >= sale.AmountToSale)
             {
-                if (count < s.AmountToSale)
-                    continue;
-                else
-                {
-                    //חישוב מחיר המבצע בהתאם לכמות
-                    totalPrice += s.Price * count / s.AmountToSale;
-                    count = count % s.AmountToSale;
-                    listSaleThatUsed.Add(s);
-                }
-                if (count == 0)
-                    break;
+                product.FinalPriceForProduct += ((count / sale.AmountToSale) * sale.Price);
+                count = count % sale.AmountToSale;
+                listSalesUsed.Add(sale);
             }
-            // אם נותרה כמות שלא נכללה במבצע, היא תחויב במחיר הרגיל
-            if (count > 0)
-                totalPrice += count * product.BasicPriceForProduct;
-            // עדכון המחיר הסופי של המוצר
-            product.FinalPriceForProduct = totalPrice;
-            product.SalesListForThisProduct = listSaleThatUsed;
         }
+        product.FinalPriceForProduct += (count * product.BasicPriceForProduct);
+        product.SalesListForThisProduct = listSalesUsed;
     }
     public void doOrder(BO.Order order)
     {
@@ -120,13 +90,8 @@ internal class OrderImplementation : IOrder
                 DO.Product p = _dal.Product.Read(product.IdProduct);
                 if (p == null)
                 {
-                    throw new BlIdNotExist();
+                    throw new BlIdNotExist("product not exist");
                 }
-                //if (product.AmountInOrder > p.AmountInStock)
-                //{
-                //    throw new Exception("dont have enugh");
-                //}
-                //int count = (int)p.AmountInStock - product.AmountInOrder;
                 _dal.Product.Update(p with { AmountInStock = p.AmountInStock - product.AmountInOrder });
             }
         
@@ -137,22 +102,16 @@ internal class OrderImplementation : IOrder
         {
             product.SalesListForThisProduct = _dal.Sale.ReadAll(sale => product.IdProduct == sale.IdProductOfSale && (isPriorityCustomer == true || (isPriorityCustomer == false && sale.IsForAllCustomers == true)) && DateTime.Now >= sale.StartSale && DateTime.Now <= sale.EndSale)
             .Select(s => new BO.SaleInProduct()
-{
-   IdSale = s.IdSale,
-   AmountToSale = s.AmountToGetSale ?? 0,
-   IsForAllCustomers = s.IsForAllCustomers == false,
-   Price = s.SumPrice ?? 0
-}).OrderBy(s => product.FinalPriceForProduct / product.AmountInOrder).ToList();
+             {
+                 IdSale = s.IdSale,
+                AmountToSale = s.AmountToGetSale ?? 0,
+                IsForAllCustomers = s.IsForAllCustomers == false,
+                Price = s.SumPrice ?? 0
+             }).OrderBy(s => product.FinalPriceForProduct / product.AmountInOrder).ToList();
         }
         catch (Exception ex)
         {
             throw new BlIdNotExist(ex.Message);
         }
-
-    }
-
-    public List<SaleInProduct> AddProductToOrder(Order order, int idProduct, int amountToOrder, bool isClubCustomer)
-    {
-        throw new NotImplementedException();
     }
 }

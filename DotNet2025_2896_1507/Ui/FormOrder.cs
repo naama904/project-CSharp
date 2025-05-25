@@ -93,6 +93,7 @@ namespace Ui
 
                 priceToPay.Text = null;
                 label3.Text=string.Empty;
+                
 
                 this.Close();
             }

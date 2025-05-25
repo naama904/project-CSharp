@@ -5,27 +5,41 @@
     <ProductName>צמיד כסף</ProductName>
     <Category>צמידים_ועגילים</Category>
     <Price>75</Price>
-    <AmountInStock>20</AmountInStock>
+    <AmountInStock>19</AmountInStock>
   </Product>
   <Product>
     <IdProduct>113</IdProduct>
     <ProductName>עגלת בוגבו</ProductName>
     <Category>עגלות</Category>
     <Price>5000</Price>
-    <AmountInStock>46</AmountInStock>
+    <AmountInStock>33</AmountInStock>
   </Product>
   <Product>
     <IdProduct>118</IdProduct>
     <ProductName>הכ</ProductName>
     <Category>בגדים</Category>
     <Price>10</Price>
-    <AmountInStock>3</AmountInStock>
+    <AmountInStock>0</AmountInStock>
   </Product>
   <Product>
-    <IdProduct>119</IdProduct>
-    <ProductName>טחט</ProductName>
-    <Category>בגדים</Category>
-    <Price>256</Price>
-    <AmountInStock>23</AmountInStock>
+    <IdProduct>120</IdProduct>
+    <ProductName>עגלת יויו</ProductName>
+    <Category>עגלות</Category>
+    <Price>3000</Price>
+    <AmountInStock>38</AmountInStock>
+  </Product>
+  <Product>
+    <IdProduct>121</IdProduct>
+    <ProductName>בקבוק mam</ProductName>
+    <Category>בקבוקים_ומוצצים</Category>
+    <Price>40</Price>
+    <AmountInStock>100</AmountInStock>
+  </Product>
+  <Product>
+    <IdProduct>122</IdProduct>
+    <ProductName>שמיכת צמר</ProductName>
+    <Category>שמיכות_וכובעים</Category>
+    <Price>80</Price>
+    <AmountInStock>50</AmountInStock>
   </Product>
 </ArrayOfProduct>

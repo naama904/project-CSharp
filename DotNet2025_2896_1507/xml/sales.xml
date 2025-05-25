@@ -27,4 +27,13 @@
     <StartSale>2025-05-18T18:57:50.913</StartSale>
     <EndSale>2025-05-30T18:57:50.911</EndSale>
   </Sale>
+  <Sale>
+    <IdSale>526</IdSale>
+    <IdProductOfSale>118</IdProductOfSale>
+    <AmountToGetSale>3</AmountToGetSale>
+    <SumPrice>10</SumPrice>
+    <IsForAllCustomers>true</IsForAllCustomers>
+    <StartSale>2025-05-24T20:23:59.003</StartSale>
+    <EndSale>2025-05-31T20:23:58.998</EndSale>
+  </Sale>
 </ArrayOfSale>
